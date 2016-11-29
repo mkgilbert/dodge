@@ -8,14 +8,14 @@ import React, { Component } from 'react';
 import { View, Text, AppRegistry, Navigator } from 'react-native';
 import Home from './js/Home';
 import About from './js/About';
-import Challenge from './js/Challenge';
-import AnagramGame from './js/Anagrams/AnagramGame';
+import Difficulty from './js/Difficulty';
+import GameScreen from './js/Game/GameScreen';
 import Results from './js/Results';
 
 /**
  * Represents the entire app
  */
-class cs399_proj2_anagram extends Component {
+class dodge extends Component {
 
     constructor(props) {
         super(props);
@@ -64,19 +64,16 @@ class cs399_proj2_anagram extends Component {
             case "home":
                 return (
                     <Home
-                        onAbout={this.onScreenPush.bind(this, "about", navigator)}
-                        onChallenge={this.onScreenPush.bind(this, "challenge", navigator)}
+                        onScores={this.onScreenPush.bind(this, "scores", navigator)}
+                        onStart={this.onScreenPush.bind(this, "start", navigator)}
                     />
                 );
             // Render the about screen
-            case "about":
-                return (
-                    <About onBack={this.onScreenPop.bind(this, navigator)} />
-                );
+
             // Render Challenge choice screen
-            case "challenge":
+            case "start":
                 return (
-                    <Challenge
+                    <Difficulty
                         route={route}
                         navigator={navigator}
                         onBack={this.onScreenPop.bind(this, navigator)}
@@ -85,7 +82,7 @@ class cs399_proj2_anagram extends Component {
 
             case "game":
                 return (
-                    <AnagramGame
+                    <GameScreen
                         route={route}
                         navigator={navigator}
                         onBack={this.onScreenPop.bind(this, navigator)}
@@ -100,4 +97,4 @@ class cs399_proj2_anagram extends Component {
     }
 }
 
-AppRegistry.registerComponent('cs399_proj1_calculator', () => cs399_proj2_anagram);
+AppRegistry.registerComponent('dodge', () => dodge);

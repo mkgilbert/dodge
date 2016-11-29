@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 /**
  * Displays the history screen in the calculator app
  */
-export class Challenge extends Component {
+export class Difficulty extends Component {
 
     constructor(props) {
         super(props);
@@ -72,11 +72,11 @@ export class Challenge extends Component {
             <View style={styles.container}>
                 <Icon.ToolbarAndroid
                     style={styles.toolbar}
-                    title="Challenge Selection"
+                    title="Difficulty Selection"
                     navIconName="arrow-left"
                     onIconClicked={this.onBackClicked.bind(this)}
                 />
-                <Text style={styles.centerText}>Select a challenge</Text>
+                <Text style={styles.centerText}>Select a Difficulty</Text>
                 <TouchableNativeFeedback onPress={this.onEasyClicked.bind(this)}>
                     <View style={styles.wideButton}>
                         <Text style={styles.wideButtonText}>Easy</Text>
@@ -92,7 +92,7 @@ export class Challenge extends Component {
     }
 }
 
-Challenge.propTypes = {
+Difficulty.propTypes = {
     onBack: React.PropTypes.func.isRequired,
     onEasy: React.PropTypes.func,
     onHard: React.PropTypes.func
@@ -135,4 +135,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Challenge;
+export default Difficulty;

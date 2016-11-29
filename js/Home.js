@@ -42,14 +42,14 @@ export class Home extends Component {
     /**
      * Called when the about button has been pressed
      */
-    onAboutClicked() {
-        this.props.onAbout();
+    onScoresClicked() {
+        this.props.onScores();
     }
     /**
      * Called when the Challenges button has been pressed
      */
-    onChallengeClicked() {
-        this.props.onChallenge();
+    onStartClicked() {
+        this.props.onStart();
     }
 
     /**
@@ -61,18 +61,18 @@ export class Home extends Component {
             <View style={styles.container}>
 
                 <View style={styles.toolbar}>
-                    <Text style={styles.toolbarText}>Nagrama!</Text>
-                    <Text style={styles.centerText}>The Anagram Game</Text>
+                    <Text style={styles.toolbarText}>DODGE</Text>
+                    <Text style={styles.centerText}>Your standard run of the mill dodging game</Text>
                 </View>
                 <View style={styles.buttons}>
-                    <TouchableNativeFeedback onPress={this.onAboutClicked.bind(this)}>
+                    <TouchableNativeFeedback onPress={this.onScoresClicked.bind(this)}>
                         <View style={styles.wideButton}>
-                            <Text style={styles.wideButtonText}>About</Text>
+                            <Text style={styles.wideButtonText}>Scoreboard</Text>
                         </View>
                     </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={this.onChallengeClicked.bind(this)}>
+                    <TouchableNativeFeedback onPress={this.onStartClicked.bind(this)}>
                         <View style={styles.wideButton}>
-                            <Text style={styles.wideButtonText}>Challenges</Text>
+                            <Text style={styles.wideButtonText}>Start</Text>
                         </View>
                     </TouchableNativeFeedback>
                 </View>
@@ -82,8 +82,8 @@ export class Home extends Component {
 }
 
 Home.propTypes = {
-    onAbout: React.PropTypes.func.isRequired,
-    onChallenge: React.PropTypes.func.isRequired
+    onScores: React.PropTypes.func.isRequired,
+    onStart: React.PropTypes.func.isRequired
 };
 
 const styles = StyleSheet.create({
