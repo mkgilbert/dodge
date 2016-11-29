@@ -1,1 +1,1 @@
-cs399-proj2-anagram
+simple dodge game made with React Native
