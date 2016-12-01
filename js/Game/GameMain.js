@@ -19,16 +19,15 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import clone from 'clone';
-import { Loop, Stage, World, Body } from 'react-game-kit/native';
-import Matter from 'matter-js';
-
 import Character from './Character';
+import Enemy from './Enemy';
+import Screen from './Screen';
 
 var window = Dimensions.get('window');
 
 const moveStep = 20;
 
-export class GameScreen extends Component {
+export class GameMain extends Component {
 
 
     constructor(props) {
@@ -40,7 +39,13 @@ export class GameScreen extends Component {
 
         this.state = {
             timeUsed: 0,
-            characterXPos: Math.floor(window.width / 2)
+            characterXPos: Math.floor(window.width / 2),
+            enemiesPos: [],
+            enemySpeed: 5,
+            enemyIndex: 0,
+            activeEnemies: 1,
+            enemySize: 35,
+            charSize: 50
         };
     }
 
@@ -63,6 +68,18 @@ export class GameScreen extends Component {
         clearInterval(this.timeInterval);
     }
 
+    createEnemy(size, xPos) {
+        this.setState({
+            enemyIndex: this.state.enemyIndex + 1
+        });
+
+        let enemy = { key: this.state.enemyIndex };
+        enemy.x = this.state.characterXPos;
+        enemy.y = 0
+
+        return enemy;
+    }
+
     /**
      * Deals with the upper left back button
      * @returns {boolean}
@@ -81,35 +98,11 @@ export class GameScreen extends Component {
         //this.props.onResults();
     }
 
-    timeToString() {
-        if (this.state.timeUsed < 0)
-            return 0;
-        let t = this.state.timeUsed;
-        let mins = Math.floor(t/60);
-        if (mins > 0) {
-            t -= mins*60;
-            let secs = t;
-            if (secs < 10){
-                secs = "0" + secs;
-            }
-            return mins + ":" + secs;
-        }
-        else {
-            return t;
-        }
+    onPlayerCollision() {
+        console.log("Player Collision");
     }
 
-    physicsInit = (engine) => {
-        const ground = Matter.Bodies.rectangle(
-            0, window.height-20,
-            window.width, 100,
-            {
-                isStatic: true,
-            },
-        );
 
-        Matter.World.addBody(engine.world, ground);
-    };
 
     onLeftPressed() {
         let new_x = this.state.characterXPos - moveStep;
@@ -131,6 +124,30 @@ export class GameScreen extends Component {
         });
     }
 
+    placeEnemy() {
+        // put enemy on the screen at the same x position as the player
+    }
+
+    startGame() {
+        this.enemyInterval = setInterval(this.updateEnemyPositions, 50)
+    }
+    timeToString() {
+        if (this.state.timeUsed < 0)
+            return 0;
+        let t = this.state.timeUsed;
+        let mins = Math.floor(t/60);
+        if (mins > 0) {
+            t -= mins*60;
+            let secs = t;
+            if (secs < 10){
+                secs = "0" + secs;
+            }
+            return mins + ":" + secs;
+        }
+        else {
+            return t;
+        }
+    }
     render() {
         let timerStyle = {
             textAlign: "right",
@@ -144,18 +161,35 @@ export class GameScreen extends Component {
         } else if (this.state.timeUsed > 120) {
             timerStyle.color = "red";
         }
+        let gameWindow = window;
+        gameWindow.height = 400;
 
-        /*return (
-            <View style={styles.container}>
-                <Text style={timerStyle}>{this.timeToString()}</Text>
-                <Character />
-            </View>
-        );*/
+        let charPos = {
+            x: this.state.characterXPos,
+            y: gameWindow.height-75
+        };
+
+        let enemyPos = {
+            x: this.state.characterXPos,
+            y: 0
+        };
+
         return (
-            <Loop>
-                <Stage height={window.height} width={window.width}>
-                    <World
-                        onInit={this.physicsInit}>
+                <View style={styles.container}>
+                    <Text style={timerStyle}>{this.timeToString()}</Text>
+                    <Screen window={gameWindow}>
+                        <Character yPos={charPos.y} xPos={charPos.x} size={this.state.charSize} />
+                        <Enemy
+                            size={this.state.enemySize}
+                            position={enemyPos}
+                            charSize={this.state.charSize}
+                            charPosition={charPos}
+                            x={this.state.characterXPos}
+                            y={gameWindow.height-75}
+                            onCollision={this.onPlayerCollision}
+                        />
+                    </Screen>
+                    <View style={styles.buttons}>
                         <TouchableHighlight
                             onPress={this.onLeftPressed.bind(this)}
                             style={styles.leftButton}>
@@ -166,37 +200,35 @@ export class GameScreen extends Component {
                             style={styles.rightButton}>
                             <Text style={{color: 'white'}}>Right</Text>
                         </TouchableHighlight>
-                        <Character x_pos={this.state.characterXPos} window={window} />
-                        <Text style={timerStyle}>{this.timeToString()}</Text>
-                    </World>
-                </Stage>
-            </Loop>
+                    </View>
+
+                </View>
         );
     }
+
+
 }
 
-GameScreen.propTypes = {
+GameMain.propTypes = {
     onBack: React.PropTypes.func.isRequired
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'stretch',
-        backgroundColor: '#F5FCFF',
+        flex: 1
     },
+    buttons: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+
     leftButton: {
-        position: 'absolute',
-        bottom: 25,
         width: 75,
         height: 75,
         backgroundColor: 'blue'
     },
     rightButton: {
-        position: 'absolute',
-        bottom: 25,
-        right: 0,
         width: 75,
         height: 75,
         backgroundColor: 'blue'
@@ -208,4 +240,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default GameScreen;
+export default GameMain;

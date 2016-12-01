@@ -9,7 +9,7 @@ import { View, Text, AppRegistry, Navigator } from 'react-native';
 import Home from './js/Home';
 import About from './js/About';
 import Difficulty from './js/Difficulty';
-import GameScreen from './js/Game/GameScreen';
+import GameMain from './js/Game/GameMain';
 import Results from './js/Results';
 
 /**
@@ -82,7 +82,7 @@ class dodge extends Component {
 
             case "game":
                 return (
-                    <GameScreen
+                    <GameMain
                         route={route}
                         navigator={navigator}
                         onBack={this.onScreenPop.bind(this, navigator)}
