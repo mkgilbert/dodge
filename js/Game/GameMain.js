@@ -36,14 +36,18 @@ export class GameMain extends Component {
         // An event handler for the back button clicked - used by the component mounting and unmounting callbacks
         this.onBackClickedEH = this.onBackClicked.bind(this);
         this.difficulty = this.props.route.difficulty;
-
+        this.gameWindow = {
+            width: window.width,
+            height: Math.floor(window.height * 0.80)
+        };
         this.state = {
             timeUsed: 0,
             characterXPos: Math.floor(window.width / 2),
-            enemiesPos: [],
+            characterYPos: this.gameWindow.height - 75,
+            enemyPositions: [{key: 0, x: Math.floor(window.width/2), y: 0}, {key: 1, x: 50, y: 0}],
             enemySpeed: 5,
             enemyIndex: 0,
-            activeEnemies: 1,
+            enemiesActive: 1,
             enemySize: 35,
             charSize: 50
         };
@@ -58,6 +62,7 @@ export class GameMain extends Component {
         this.timeInterval = setInterval(() => {
             this.setState({timeUsed: this.state.timeUsed + 1})
         }, 1000);
+        this.startGame();
     }
 
     /**
@@ -66,6 +71,8 @@ export class GameMain extends Component {
     componentWillUnmount() {
         BackAndroid.removeEventListener("hardwareBackPress", this.onBackClickedEH);
         clearInterval(this.timeInterval);
+        clearInterval(this.enemyInterval);
+        //clearInterval(this.gameInterval);
     }
 
     createEnemy(size, xPos) {
@@ -75,7 +82,7 @@ export class GameMain extends Component {
 
         let enemy = { key: this.state.enemyIndex };
         enemy.x = this.state.characterXPos;
-        enemy.y = 0
+        enemy.y = 0;
 
         return enemy;
     }
@@ -129,8 +136,23 @@ export class GameMain extends Component {
     }
 
     startGame() {
-        this.enemyInterval = setInterval(this.updateEnemyPositions, 50)
+        this.enemyInterval = setInterval(this.updateEnemyPositions.bind(this), 100);
+        this.timeInterval = setInterval(this.updateGame.bind(this), 1000);
+        //this.gameInterval = setInterval(this.updateEnemiesActive, 250);
     }
+
+    updateGame() {
+        // update score and time ... ?
+        // increment max active enemies and speed
+        if (!this.state.enemyPositions) {   // means all enemies are gone
+            console.log("pushing to results...")
+            this.props.navigator.push({
+                id: "results"
+            });
+        }
+        console.log("updating game");
+    }
+
     timeToString() {
         if (this.state.timeUsed < 0)
             return 0;
@@ -148,7 +170,34 @@ export class GameMain extends Component {
             return t;
         }
     }
+
+    updateEnemyPositions() {
+        // move enemies based on speed
+        let enemyPos = clone(this.state.enemyPositions);
+        let charPos = {
+            x: this.state.characterXPos,
+            y: this.state.characterYPos
+        };
+
+        this.setState({
+            enemyPositions: enemyPos.filter(enemy => !enemy.remove).map(enemy => {
+                if (enemy.y > this.gameWindow.height) {
+                    enemy.remove = true;
+                    return enemy;
+                }
+
+                enemy.y += this.state.enemySpeed;
+                return enemy;
+            })
+        });
+    }
+
+    updateEnemiesActive() {
+        // check the current number of enemies and place a new enemy if need be
+    }
+
     render() {
+        // TODO: move this out of render
         let timerStyle = {
             textAlign: "right",
             fontSize: 20,
@@ -161,33 +210,43 @@ export class GameMain extends Component {
         } else if (this.state.timeUsed > 120) {
             timerStyle.color = "red";
         }
-        let gameWindow = window;
-        gameWindow.height = 400;
 
         let charPos = {
             x: this.state.characterXPos,
-            y: gameWindow.height-75
+            y: this.state.characterYPos
         };
 
-        let enemyPos = {
-            x: this.state.characterXPos,
-            y: 0
-        };
+
+        if (!this.state.enemyPositions || this.state.enemyPositions.length === 0) {
+            return(
+                <View><Text>END</Text></View>
+            );
+        }
+
+        let enemyPos = clone(this.state.enemyPositions);
 
         return (
                 <View style={styles.container}>
                     <Text style={timerStyle}>{this.timeToString()}</Text>
-                    <Screen window={gameWindow}>
-                        <Character yPos={charPos.y} xPos={charPos.x} size={this.state.charSize} />
-                        <Enemy
-                            size={this.state.enemySize}
-                            position={enemyPos}
-                            charSize={this.state.charSize}
-                            charPosition={charPos}
-                            x={this.state.characterXPos}
-                            y={gameWindow.height-75}
-                            onCollision={this.onPlayerCollision}
+                    <Screen window={this.gameWindow}>
+                        <Character
+                            yPos={charPos.y}
+                            xPos={charPos.x}
+                            size={this.state.charSize}
                         />
+                        {
+                            this.state.enemyPositions.map(enemy =>
+                                <Enemy
+                                    key={enemy.key}
+                                    size={this.state.enemySize}
+                                    position={enemyPos[0]}
+                                    charSize={this.state.charSize}
+                                    charPosition={charPos}
+                                    onCollision={this.onPlayerCollision}
+                                />
+                            )
+                        }
+
                     </Screen>
                     <View style={styles.buttons}>
                         <TouchableHighlight
