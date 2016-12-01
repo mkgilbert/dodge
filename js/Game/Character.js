@@ -25,15 +25,16 @@ class Character extends Component {
 
     render() {
         let iconStyle = {
+            width: this.props.size,
+            height: this.props.size,
+            backgroundColor: 'white',
             position: 'absolute',
             left: this.props.xPos,
             top: this.props.yPos
         };
 
         return (
-            <View>
-                <Icon name="device-mobile" size={this.props.size} style={iconStyle} />
-            </View>
+            <View style={iconStyle} />
         )
     }
 }

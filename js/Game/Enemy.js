@@ -27,6 +27,24 @@ class Enemy extends Component {
     componentDidUpdate() {
         // check collision
         const { size, position, charSize, charPosition } = this.props;
+        // find the midpoints of the enemy and character
+        let halfEnemyWidth = Math.floor(size / 2);
+        let halfEnemyHeight = Math.floor(size / 2);
+        let halfCharWidth = Math.floor(charSize / 2);
+        let halfCharHeight = Math.floor(charSize / 2);
+        let enemyCenter = {x: position.x + halfEnemyWidth, y: position.y + halfEnemyHeight};
+        let charCenter = {x: charPosition.x + halfCharWidth, y: charPosition.y + halfCharHeight};
+
+        // find distance between the midpoints of the enemy and character
+        let xDistance = Math.abs(charCenter.x - enemyCenter.x);
+        let yDistance = Math.abs(charCenter.y - enemyCenter.y);
+
+        // check if objects are touching
+        if (xDistance < (halfEnemyWidth + halfCharWidth) &&
+            yDistance < (halfEnemyHeight + halfCharHeight)) {
+            console.log("xDistance: " + xDistance + " yDistance: " + yDistance);
+            this.props.onCollision();
+        }
     }
 
     componentDidMount() {

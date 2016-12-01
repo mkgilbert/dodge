@@ -38,7 +38,7 @@ export class GameMain extends Component {
         this.difficulty = this.props.route.difficulty;
         this.gameWindow = {
             width: window.width,
-            height: Math.floor(window.height * 0.80)
+            height: Math.floor(window.height * 0.75)
         };
         this.state = {
             timeUsed: 0,
@@ -72,7 +72,7 @@ export class GameMain extends Component {
         BackAndroid.removeEventListener("hardwareBackPress", this.onBackClickedEH);
         clearInterval(this.timeInterval);
         clearInterval(this.enemyInterval);
-        //clearInterval(this.gameInterval);
+        clearInterval(this.gameInterval);
     }
 
     createEnemy(size, xPos) {
@@ -81,7 +81,7 @@ export class GameMain extends Component {
         });
 
         let enemy = { key: this.state.enemyIndex };
-        enemy.x = this.state.characterXPos;
+        enemy.x = xPos;
         enemy.y = 0;
 
         return enemy;
@@ -133,12 +133,16 @@ export class GameMain extends Component {
 
     placeEnemy() {
         // put enemy on the screen at the same x position as the player
+        let enemy = this.createEnemy(this.state.enemySize, this.state.characterXPos);
+        this.setState({
+            enemyPositions: [...this.state.enemyPositions].concat(enemy)
+        });
     }
 
     startGame() {
-        this.enemyInterval = setInterval(this.updateEnemyPositions.bind(this), 100);
+        this.enemyInterval = setInterval(this.updateEnemyPositions.bind(this), 50);
         this.timeInterval = setInterval(this.updateGame.bind(this), 1000);
-        //this.gameInterval = setInterval(this.updateEnemiesActive, 250);
+        this.gameInterval = setInterval(this.updateEnemiesActive.bind(this), 250);
     }
 
     updateGame() {
@@ -194,6 +198,9 @@ export class GameMain extends Component {
 
     updateEnemiesActive() {
         // check the current number of enemies and place a new enemy if need be
+        if (this.state.enemyPositions < this.state.enemiesActive) {
+            this.placeEnemy();
+        }
     }
 
     render() {
@@ -217,11 +224,11 @@ export class GameMain extends Component {
         };
 
 
-        if (!this.state.enemyPositions || this.state.enemyPositions.length === 0) {
+        /*if (!this.state.enemyPositions || this.state.enemyPositions.length === 0) {
             return(
                 <View><Text>END</Text></View>
             );
-        }
+        }*/
 
         let enemyPos = clone(this.state.enemyPositions);
 
