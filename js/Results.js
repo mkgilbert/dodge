@@ -65,53 +65,18 @@ export class Results extends Component {
      * Render the component
      */
     render() {
-        let gameData = this.props.route.gameData;
-        let colStyle = {
-            flex: 1,
-            textAlign: "center",
-            fontWeight: "bold",
-            fontSize: 16
-        };
-        let score = 0;
-        for (let i = 0; i < gameData.length; i++) {
-            if (gameData[i].guess!== undefined && gameData[i].guess.toLowerCase() === gameData[i].answer.toLowerCase())
-                score++;
-        }
-        let totalQuestions = gameData.length;
+        let score = this.props.route.score;
+        let time = this.props.route.time;
         return (
             <View style={styles.container}>
-                <Icon.ToolbarAndroid
-                    style={styles.toolbar}
-                    title="Results"
-                />
                 <View style={styles.content}>
                     <View>
-                        <View style={styles.row}>
-                            <Text style={colStyle}>Anagram</Text>
-                            <Text style={colStyle}>Answer</Text>
-                            <Text style={colStyle}>Your Guess</Text>
-                        </View>
-                        {gameData.map(function(anagram, i) {
-                            colStyle = {
-                                flex: 1,
-                                textAlign: "center",
-                                fontSize: 14,
-                                color: "red"
-                            };
-                            if (anagram.guess!== undefined && anagram.guess.toLowerCase() === anagram.answer.toLowerCase())
-                                colStyle.color = "green";
-                            return (
-                                <View key={i} style={styles.row}>
-                                    <Text style={colStyle}>{anagram.question}</Text>
-                                    <Text style={colStyle}>{anagram.answer}</Text>
-                                    <Text style={colStyle}>{anagram.guess}</Text>
-                                </View>
-                            );
-                        })}
+                        <Text style={styles.gameOver}>Game Over!</Text>
+                        <Text style={styles.text}>Your Score:</Text>
+                        <Text style={styles.score}>{score}</Text>
+                        <Text style={styles.text}>Your Time:</Text>
+                        <Text style={styles.score}>{time}</Text>
                     </View>
-                    <Text style={styles.score}>
-                        {score} / {totalQuestions}
-                    </Text>
                     <View style={styles.buttons}>
                         <TouchableNativeFeedback onPress={this.onHomeClicked.bind(this)}>
                             <View style={styles.wideButton}>
@@ -137,9 +102,16 @@ const styles = StyleSheet.create({
         alignItems: 'stretch',
         backgroundColor: '#F5FCFF',
     },
-    toolbar: {
-        height: 56,
-        backgroundColor: '#e9eaed'
+    gameOver: {
+        marginTop: 30,
+        marginBottom: 30,
+        fontSize: 60,
+        alignSelf: 'center'
+    },
+    text: {
+        paddingLeft: 20,
+        fontSize: 20,
+        backgroundColor: '#81D4FA'
     },
     content: {
         flex: 1,
@@ -154,7 +126,7 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     wideButton: {
-        backgroundColor: '#1FB6FF',
+        backgroundColor: '#01579B',
         margin: 10,
         marginTop: 0,
         marginBottom: 20,
@@ -163,7 +135,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     wideButtonText: {
-        fontSize: 20
+        fontSize: 20,
+        color: 'white'
     },
     buttons: {
         marginBottom: 0

@@ -65,11 +65,6 @@ export class Home extends Component {
                     <Text style={styles.centerText}>Your standard run of the mill dodging game</Text>
                 </View>
                 <View style={styles.buttons}>
-                    <TouchableNativeFeedback onPress={this.onScoresClicked.bind(this)}>
-                        <View style={styles.wideButton}>
-                            <Text style={styles.wideButtonText}>Scoreboard</Text>
-                        </View>
-                    </TouchableNativeFeedback>
                     <TouchableNativeFeedback onPress={this.onStartClicked.bind(this)}>
                         <View style={styles.wideButton}>
                             <Text style={styles.wideButtonText}>Start</Text>
@@ -89,23 +84,20 @@ Home.propTypes = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'stretch',
-        backgroundColor: '#F5FCFF',
+        justifyContent: 'space-between'
     },
     toolbar: {
         height: 150,
-        marginBottom: 30,
-        backgroundColor: '#1FB6FF',
-        justifyContent: "center",
+        backgroundColor: '#01579B',
         alignItems: "center",
         paddingBottom: 15
     },
     toolbarText: {
-        fontSize: 50
+        fontSize: 50,
+        color: 'white'
     },
     wideButton: {
-        backgroundColor: '#1FB6FF',
+        backgroundColor: '#01579B',
         margin: 10,
         marginTop: 0,
         marginBottom: 50,
@@ -115,13 +107,14 @@ const styles = StyleSheet.create({
     },
     centerText: {
         textAlign: "center",
-        fontSize: 20
+        fontSize: 20,
+        color: 'white'
     },
     wideButtonText: {
-        fontSize: 20
+        fontSize: 20,
+        color: 'white'
     },
     buttons: {
-        flex: 1,
         justifyContent: "center"
     }
 });

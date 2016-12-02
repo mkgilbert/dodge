@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
         borderBottomColor: '#666666'
     },
     wideButton: {
-        backgroundColor: '#1FB6FF',
+        backgroundColor: '#01579B',
         margin: 10,
         marginTop: 0,
         marginBottom: 30,
@@ -131,7 +131,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     wideButtonText: {
-        fontSize: 20
+        fontSize: 20,
+        color: 'white'
     }
 });
 

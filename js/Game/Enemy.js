@@ -42,8 +42,7 @@ class Enemy extends Component {
         // check if objects are touching
         if (xDistance < (halfEnemyWidth + halfCharWidth) &&
             yDistance < (halfEnemyHeight + halfCharHeight)) {
-            console.log("xDistance: " + xDistance + " yDistance: " + yDistance);
-            this.props.onCollision();
+            this.props.onCollision(this.props.index);
         }
     }
 

@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 
 const style = (window) => {
-    console.log("width: " + window.width + " height: " + window.height);
     return {
         backgroundColor: 'grey',
         width: window.width,
