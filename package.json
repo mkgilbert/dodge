@@ -15,8 +15,8 @@
     "react-game-kit": "0.0.1",
     "react-native": "0.34.0",
     "react-native-fit-image": "^1.4.6",
-    "react-native-orientation": "^1.17.0",
     "react-native-sound": "^0.8.3",
+    "react-native-orientation": "yamill/react-native-orientation",
     "react-native-vector-icons": "^2.1.0"
   }
 }

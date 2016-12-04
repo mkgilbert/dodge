@@ -2,7 +2,7 @@
  * Created by mkg on 11/30/2016.
  */
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Image } from 'react-native';
 
 const style = (window) => {
     return {
@@ -21,9 +21,9 @@ export class Screen extends Component {
 
     render() {
         return(
-            <View style={style(this.props.window)}>
+            <Image source={require('../../assets/sky_skinny.png')} style={style(this.props.window)}>
                 { this.props.children }
-            </View>
+            </Image>
         );
     }
 }

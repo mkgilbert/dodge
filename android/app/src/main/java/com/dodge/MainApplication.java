@@ -2,6 +2,7 @@ package com.dodge;
 
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.zmxv.RNSound.RNSoundPackage;
+import com.github.yamill.orientation.OrientationPackage;
 
 import android.app.Application;
 import android.util.Log;
@@ -28,7 +29,8 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
           new VectorIconsPackage(),
-          new RNSoundPackage()
+          new RNSoundPackage(),
+          new OrientationPackage()
       );
     }
   };
