@@ -9,12 +9,10 @@ import {
     StyleSheet,
     Text,
     View,
-    BackAndroid
+    BackAndroid,
+    Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import AnagramGuessBox from './Anagrams/AnagramGuessBox';
-import AnagramDisplay from './Anagrams/AnagramDisplay';
-
 
 /**
  * Represents the game home screen
@@ -61,13 +59,13 @@ export class Home extends Component {
             <View style={styles.container}>
 
                 <View style={styles.toolbar}>
-                    <Text style={styles.toolbarText}>DODGE</Text>
-                    <Text style={styles.centerText}>Your standard run of the mill dodging game</Text>
+                    <Image source={require('../assets/logo.jpg')} style={styles.logo} />
+                    <Image source={require('../assets/typical.jpg')}  />
                 </View>
                 <View style={styles.buttons}>
                     <TouchableNativeFeedback onPress={this.onStartClicked.bind(this)}>
                         <View style={styles.wideButton}>
-                            <Text style={styles.wideButtonText}>Start</Text>
+                            <Image source={require('../assets/start_button.jpg')} />
                         </View>
                     </TouchableNativeFeedback>
                 </View>
@@ -84,20 +82,26 @@ Home.propTypes = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'space-between'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     toolbar: {
-        height: 150,
-        backgroundColor: '#01579B',
-        alignItems: "center",
-        paddingBottom: 15
+        alignItems: "center"
     },
     toolbarText: {
         fontSize: 50,
         color: 'white'
     },
+    logo: {
+        maxWidth: 350,
+        maxHeight: 175
+    },
+    typical: {
+        width: 275,
+        height: 80
+    },
+
     wideButton: {
-        backgroundColor: '#01579B',
         margin: 10,
         marginTop: 0,
         marginBottom: 50,
@@ -107,17 +111,15 @@ const styles = StyleSheet.create({
     },
     centerText: {
         textAlign: "center",
-        fontSize: 20,
-        color: 'white'
+        fontSize: 20
     },
     wideButtonText: {
         fontSize: 20,
         color: 'white'
     },
     buttons: {
-        justifyContent: "center"
+        margin: 10
     }
 });
 
-export { AnagramDisplay, AnagramGuessBox };
 export default Home;

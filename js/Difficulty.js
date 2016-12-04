@@ -10,7 +10,8 @@ import {
     Text,
     View,
     ScrollView,
-    BackAndroid
+    BackAndroid,
+    Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -76,15 +77,15 @@ export class Difficulty extends Component {
                     navIconName="arrow-left"
                     onIconClicked={this.onBackClicked.bind(this)}
                 />
-                <Text style={styles.centerText}>Select a Difficulty</Text>
+                <Image style={{marginBottom: 20}} source={require('../assets/difficulty.jpg')} />
                 <TouchableNativeFeedback onPress={this.onEasyClicked.bind(this)}>
                     <View style={styles.wideButton}>
-                        <Text style={styles.wideButtonText}>Easy</Text>
+                        <Image source={require('../assets/easy_button.jpg')} />
                     </View>
                 </TouchableNativeFeedback>
                 <TouchableNativeFeedback onPress={this.onHardClicked.bind(this)}>
                     <View style={styles.wideButton}>
-                        <Text style={styles.wideButtonText}>Hard</Text>
+                        <Image source={require('../assets/hard_button.jpg')} />
                     </View>
                 </TouchableNativeFeedback>
             </View>
@@ -101,8 +102,8 @@ Difficulty.propTypes = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'stretch',
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: '#F5FCFF',
     },
     toolbar: {
@@ -122,7 +123,6 @@ const styles = StyleSheet.create({
         borderBottomColor: '#666666'
     },
     wideButton: {
-        backgroundColor: '#01579B',
         margin: 10,
         marginTop: 0,
         marginBottom: 30,

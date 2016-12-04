@@ -15,7 +15,8 @@ import {
     TextInput,
     View,
     BackAndroid,
-    Dimensions
+    Dimensions,
+    Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import clone from 'clone';
@@ -183,7 +184,8 @@ export class GameMain extends Component {
             time: time
         });
 
-        if (this.state.collisions === this.maxCollisions) {
+        if (this.state.collisions === this.maxCollisions ||
+            this.maxCollisions - this.state.collisions <= 0) {
             //console.log("reached max collisions");
             this.resetGame();
             this.onResults();
@@ -288,12 +290,12 @@ export class GameMain extends Component {
                     <TouchableHighlight
                         onPress={this.onLeftPressed.bind(this)}
                         style={styles.leftButton}>
-                        <Text style={{color: 'white'}}>Left</Text>
+                        <Image source={require('../../assets/left_button.png')} style={styles.leftButton} />
                     </TouchableHighlight>
                     <TouchableHighlight
                         onPress={this.onRightPressed.bind(this)}
                         style={styles.rightButton}>
-                        <Text style={{color: 'white'}}>Right</Text>
+                        <Image source={require('../../assets/right_button.jpg')} style={styles.rightButton} />
                     </TouchableHighlight>
                 </View>
 
@@ -323,13 +325,13 @@ const styles = StyleSheet.create({
         margin: 5
     },
     leftButton: {
-        width: 75,
-        height: 75,
+        width: 120,
+        height: 80,
         backgroundColor: 'blue'
     },
     rightButton: {
-        width: 75,
-        height: 75,
+        width: 120,
+        height: 80,
         backgroundColor: 'blue'
     },
     character: {

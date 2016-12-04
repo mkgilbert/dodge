@@ -63,7 +63,7 @@ class Enemy extends Component {
         };
         return (
             <View>
-                <Image style={style} source={require("../../assets/raindrop_100.png")} />
+                <Image style={style} source={require("../../assets/grey_raindrop.jpg")} />
             </View>
         );
     }
