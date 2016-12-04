@@ -13,7 +13,8 @@ import {
     Text,
     TextInput,
     View,
-    BackAndroid
+    BackAndroid,
+    Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
 
@@ -25,8 +26,8 @@ class Character extends Component {
 
     render() {
         let iconStyle = {
-            width: this.props.size,
-            height: this.props.size,
+            width: this.props.size.width,
+            height: this.props.size.height,
             backgroundColor: 'white',
             position: 'absolute',
             left: this.props.xPos,
@@ -34,13 +35,18 @@ class Character extends Component {
         };
 
         return (
-            <View style={iconStyle} />
+            <View>
+                <Image style={iconStyle} source={require("../../assets/cat_100.png")} />
+            </View>
         )
     }
 }
 
 Character.propTypes = {
-    size: PropTypes.number.isRequired,
+    size: PropTypes.shape({
+        width: PropTypes.number.isRequired,
+        height: PropTypes.number.isRequired
+    }),
     xPos: PropTypes.number,
     yPos: PropTypes.number,
     window: PropTypes.object

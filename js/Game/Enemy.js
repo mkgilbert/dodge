@@ -30,8 +30,8 @@ class Enemy extends Component {
         // find the midpoints of the enemy and character
         let halfEnemyWidth = Math.floor(size / 2);
         let halfEnemyHeight = Math.floor(size / 2);
-        let halfCharWidth = Math.floor(charSize / 2);
-        let halfCharHeight = Math.floor(charSize / 2);
+        let halfCharWidth = Math.floor(charSize.width / 2);
+        let halfCharHeight = Math.floor(charSize.height / 2);
         let enemyCenter = {x: position.x + halfEnemyWidth, y: position.y + halfEnemyHeight};
         let charCenter = {x: charPosition.x + halfCharWidth, y: charPosition.y + halfCharHeight};
 
@@ -56,13 +56,15 @@ class Enemy extends Component {
         let style = {
             width: this.props.size,
             height: this.props.size,
-            backgroundColor: 'red',
+            backgroundColor: 'white',
             position: 'absolute',
             top: this.props.position.y,
             left: this.props.position.x
         };
         return (
-            <View style={style} />
+            <View>
+                <Image style={style} source={require("../../assets/raindrop_100.png")} />
+            </View>
         );
     }
 }
@@ -77,7 +79,10 @@ Enemy.propTypes = {
         x: PropTypes.number.isRequired,
         y: PropTypes.number.isRequired
     }),
-    charSize: PropTypes.number.isRequired,
+    charSize: PropTypes.shape({
+        width: PropTypes.number.isRequired,
+        height: PropTypes.number.isRequired
+    }),
     charPosition: PropTypes.shape({
         x: PropTypes.number.isRequired,
         y: PropTypes.number.isRequired

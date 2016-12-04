@@ -41,12 +41,18 @@ export class GameMain extends Component {
         if (difficulty === 'hard') {
             this.maxSpeed = 50;
             this.maxEnemies = 6;
-            this.characterSize = 40;
+            this.characterSize = {
+                width: 40,
+                height: 45
+            };
             this.maxCollisions = 2;
         } else {
             this.maxSpeed = 30;
             this.maxEnemies = 4;
-            this.characterSize = 30;
+            this.characterSize = {
+                width: 30,
+                height: 34
+            };
             this.maxCollisions = 4;
         }
 
@@ -121,7 +127,7 @@ export class GameMain extends Component {
     onPlayerCollision(index) {
         let collisions = this.state.collisions;
         if (this.lastCollisionIndex !== index) {
-            console.log("Player Collision at index " + index);
+            //console.log("Player Collision at index " + index);
             this.lastCollisionIndex = index;
             this.setState({
                 collisions: collisions + 1
@@ -178,7 +184,7 @@ export class GameMain extends Component {
         });
 
         if (this.state.collisions === this.maxCollisions) {
-            console.log("reached max collisions");
+            //console.log("reached max collisions");
             this.resetGame();
             this.onResults();
         }
